@@ -1,5 +1,5 @@
 const express = require('express')
-const fortune = require("./lib/fortune")
+const fortune = require('./lib/fortune')
 const expressHandlebars = require('express-handlebars')
     .create({ defaultLayout: 'main' })
 
@@ -29,5 +29,3 @@ app.listen(app.get('port'), () => console.log(
     `Express started on http://localhost:${app.get('port')} ` +
     `press Ctrl-C to terminate.`
 ))
-
-
