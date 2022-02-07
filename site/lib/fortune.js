@@ -7,6 +7,6 @@ const fortunes = [
 ];
 
 function randomFortune() {
-    return fortunes[Math.floor(Math.random() * fortunes.length)];
+    return fortunes[Math.floor(Math.random() * fortunes.length)]
 }
 exports.randomFortune = randomFortune;

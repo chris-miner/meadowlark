@@ -18,7 +18,7 @@ app.use((req, res) => {
     res.status(404)
     res.render('404')
 })
-app.use((err, req, res, next) => {
+app.use((err, req, res, _next) => {
     console.log(err.message)
     res.status(500)
     res.render('500')
