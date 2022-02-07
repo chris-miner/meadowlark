@@ -1,5 +1,7 @@
 const express = require('express')
-const fortune = require('./lib/fortune')
+const handlers = require("./lib/handlers")
+
+
 const expressHandlebars = require('express-handlebars')
     .create({ defaultLayout: 'main' })
 
@@ -9,23 +11,17 @@ app.set('view engine', 'handlebars')
 app.set('port', process.env.PORT || 3030)
 
 // set up routes
-app.get('/', (req, res) => res.render('home'))
-app.get('/about', (req, res) => res.render('about', { fortune: fortune.randomFortune() }))
+app.get('/', handlers.home)
+app.get('/about', handlers.about)
 
 app.use(express.static(__dirname + '/public'))
 
-app.use((req, res) => {
-    res.status(404)
-    res.render('404')
-})
-app.use((err, req, res, _next) => {
-    console.log(err.message)
-    res.status(500)
-    res.render('500')
-})
+app.use(handlers.notFound)
+app.use(handlers.serverError)
 
 // start server
 app.listen(app.get('port'), () => console.log(
     `Express started on http://localhost:${app.get('port')} ` +
     `press Ctrl-C to terminate.`
 ))
+
