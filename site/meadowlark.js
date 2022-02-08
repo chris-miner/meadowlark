@@ -6,6 +6,7 @@ const expressHandlebars = require('express-handlebars')
     .create({ defaultLayout: 'main' })
 
 const app = express()
+app.disable('x-powered-by')
 app.engine('handlebars', expressHandlebars.engine)
 app.set('view engine', 'handlebars')
 app.set('port', process.env.PORT || 3030)
@@ -13,6 +14,7 @@ app.set('port', process.env.PORT || 3030)
 // set up routes
 app.get('/', handlers.home)
 app.get('/about', handlers.about)
+app.get('/headers', handlers.headers)
 
 app.use(express.static(__dirname + '/public'))
 
