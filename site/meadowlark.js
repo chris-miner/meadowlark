@@ -3,7 +3,7 @@ const handlers = require("./lib/handlers")
 
 
 const expressHandlebars = require('express-handlebars')
-    .create({ defaultLayout: 'main' })
+    .create({ defaultLayout: 'bootstrap' })
 
 const app = express()
 app.disable('x-powered-by')
@@ -14,6 +14,7 @@ app.set('port', process.env.PORT || 3030)
 // set up routes
 app.get('/', handlers.home)
 app.get('/about', handlers.about)
+app.get('/contact', handlers.contact)
 app.get('/headers', handlers.headers)
 
 app.use(express.static(__dirname + '/public'))
