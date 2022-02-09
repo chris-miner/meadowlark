@@ -1,1 +1,5 @@
-Okay so I can edit this.
+# Meadowlark Tutorial Project
+## Tutorial Source
+This work is based on the book Web Development with Node & Express by Ethan Brown (2020)
+## Key Features
+The project uses Node, Express, Handlebars, and Bootstrap
