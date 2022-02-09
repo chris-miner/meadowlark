@@ -3,7 +3,7 @@ const handlers = require("./lib/handlers")
 
 
 const expressHandlebars = require('express-handlebars')
-    .create({ defaultLayout: 'bootstrap' })
+    .create({ defaultLayout: 'main' })
 
 const app = express()
 app.disable('x-powered-by')
