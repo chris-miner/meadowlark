@@ -1,9 +1,7 @@
 const express = require('express')
 const handlers = require("./lib/handlers")
-
-
-const expressHandlebars = require('express-handlebars')
-    .create({ defaultLayout: 'main' })
+const bodyParser = require('body-parser')
+const expressHandlebars = require('express-handlebars').create({ defaultLayout: 'main' })
 
 const app = express()
 app.disable('x-powered-by')
@@ -11,14 +9,22 @@ app.engine('handlebars', expressHandlebars.engine)
 app.set('view engine', 'handlebars')
 app.set('port', process.env.PORT || 3030)
 
+// set up form post decoding
+app.use(bodyParser.urlencoded({ extended: true }))
+
 // set up routes
 app.get('/', handlers.home)
 app.get('/about', handlers.about)
 app.get('/contact', handlers.contact)
+app.post('/contact/process', handlers.contactProcess)
+app.get('/contact/success', handlers.contactSuccess)
+
 app.get('/headers', handlers.headers)
 
+// set up static resource delivery
 app.use(express.static(__dirname + '/public'))
 
+// error handlers
 app.use(handlers.notFound)
 app.use(handlers.serverError)
 

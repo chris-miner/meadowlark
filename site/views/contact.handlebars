@@ -1,1 +1,30 @@
-<h1>Contact Meadowlark Travel</h1>
+<h1>Sign up for our newsletter!</h1>
+<form action="/contact/process?form=newsletter" method="post">
+    <input type="hidden" name="_csrf" value="{{csrf}}">
+
+    <div class="row">
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" name="name" id="firstName" placeholder="First">
+                <label for="fieldName">First</label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" name="name" id="lastName" placeholder="Last">
+                <label for="lastName">Last</label>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-floating mb-3">
+        <input type="email" class="form-control" name="email" id="fieldEmail" aria-describedby="emailHelp"
+            placeholder="Email">
+        <label for="fieldEmail" class="form-label">Email</label>
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
