@@ -17,8 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.get('/', handlers.home)
 app.get('/about', handlers.about)
 app.get('/contact', handlers.contact)
-app.post('/contact/process', handlers.contactProcess)
-app.get('/contact/success', handlers.contactSuccess)
+app.post('/contact', handlers.contactProcess)
 
 app.get('/headers', handlers.headers)
 

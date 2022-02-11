@@ -13,16 +13,14 @@ exports.about = (_req, res) => res.render('about');
 
 
 /*
-    Contacts related handlers.  The first one delivers our contact
-    page with a form.  The second one handles the form submit and
-    redirects to our third which is the thank-you page.  I suppose
-    if there were an error on handling that post we could return 
-    to the contact form.
+    Contact form related
 */
-exports.contact = (_req, res) => res.render('contact');
+exports.contact = (req, res) => {
+    res.render('contact', { success: req.query.success });
+}
 
 const { Customer } = require('../models/customer.js')
-exports.contactProcess = async (req, _res) => {
+exports.contactProcess = async (req, res) => {
     console.log(req.body)
 
     // stuff first last and email into the database
@@ -33,7 +31,5 @@ exports.contactProcess = async (req, _res) => {
         result = await customer.save()
     }
 
-    _res.redirect(303, '/contact/success')
+    res.redirect(303, '/contact?success=true')
 }
-
-exports.contactSuccess = (req, res) => res.render('contact-success', req.customer);

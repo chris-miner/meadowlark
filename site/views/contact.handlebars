@@ -1,5 +1,8 @@
+{{#if success}}
+<h1>Thanks! We'll keep in touch!</h1>
+{{else}}
 <h1>Sign up for our newsletter!</h1>
-<form action="/contact/process" method="post">
+<form action="/contact" method="post">
     <input type="hidden" name="_csrf" value="{{csrf}}">
 
     <div class="row">
@@ -28,3 +31,4 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </div>
 </form>
+{{/if}}
