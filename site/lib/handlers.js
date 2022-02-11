@@ -16,7 +16,11 @@ exports.about = (_req, res) => res.render('about');
     Contact form related
 */
 exports.contact = (req, res) => {
-    res.render('contact', { success: req.query.success });
+    let context = { success: req.query.success }
+    if (res.locals.Customer != null) {
+        context.Customer = res.locals.Customer
+    }
+    res.render('contact', context);
 }
 
 const { Customer } = require('../models/customer.js')
@@ -30,6 +34,6 @@ exports.contactProcess = async (req, res) => {
         const customer = new Customer({ first: req.body.firstName, last: req.body.lastName, email: req.body.email })
         result = await customer.save()
     }
-
+    res.locals.Customer = { first: req.body.firstName, last: req.body.lastName, email: req.body.email }
     res.redirect(303, '/contact?success=true')
 }
