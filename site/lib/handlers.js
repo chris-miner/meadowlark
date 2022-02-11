@@ -17,8 +17,8 @@ exports.about = (_req, res) => res.render('about');
 */
 exports.contact = (req, res) => {
     let context = { success: req.query.success }
-    if (res.locals.Customer != null) {
-        context.Customer = res.locals.Customer
+    if (req.session.Customer != null) {
+        context.Customer = req.session.Customer
     }
     res.render('contact', context);
 }
@@ -34,6 +34,6 @@ exports.contactProcess = async (req, res) => {
         const customer = new Customer({ first: req.body.firstName, last: req.body.lastName, email: req.body.email })
         result = await customer.save()
     }
-    res.locals.Customer = { first: req.body.firstName, last: req.body.lastName, email: req.body.email }
+    req.session.Customer = { first: req.body.firstName, last: req.body.lastName, email: req.body.email }
     res.redirect(303, '/contact?success=true')
 }

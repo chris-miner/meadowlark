@@ -1,24 +1,31 @@
+// necessary imports
 const express = require('express')
 const mongoose = require('mongoose');
 const handlers = require("./lib/handlers")
 const bodyParser = require('body-parser')
 const expressHandlebars = require('express-handlebars').create({ defaultLayout: 'main' })
+var session = require('express-session')
 
+// configure express app, 
 const app = express()
 app.disable('x-powered-by')
 app.engine('handlebars', expressHandlebars.engine)
 app.set('view engine', 'handlebars')
 app.set('port', process.env.PORT || 3030)
 
-// set up form post decoding
+// set up middleware
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(session({
+    resave: false,
+    saveUninitialized: false,
+    secret: 'keyboard kitten'
+}))
 
 // set up routes
 app.get('/', handlers.home)
 app.get('/about', handlers.about)
 app.get('/contact', handlers.contact)
 app.post('/contact', handlers.contactProcess)
-
 app.get('/headers', handlers.headers)
 
 // set up static resource delivery
@@ -28,7 +35,7 @@ app.use(express.static(__dirname + '/public'))
 app.use(handlers.notFound)
 app.use(handlers.serverError)
 
-
+// connect to database
 // mongodb://user:pass@localhost:port/database
 mongoose.connect('mongodb://127.0.0.1/meadowlark')
 
