@@ -1,3 +1,4 @@
+
 exports.notFound = (_req, res) => res.status(404).render('404')
 exports.serverError = (err, _req, res, _next) => res.status(500).render('500', { error: err })
 
@@ -20,8 +21,19 @@ exports.about = (_req, res) => res.render('about');
 */
 exports.contact = (_req, res) => res.render('contact');
 
-exports.contactProcess = (req, res) => {
+const { Customer } = require('../models/customer.js')
+exports.contactProcess = async (req, _res) => {
     console.log(req.body)
-    res.redirect(303, '/contact/success');
+
+    // stuff first last and email into the database
+    var result = await Customer.findOne({ email: req.body.email }).exec()
+
+    if (result === null) {
+        const customer = new Customer({ first: req.body.firstName, last: req.body.lastName, email: req.body.email })
+        result = await customer.save()
+    }
+
+    _res.redirect(303, '/contact/success')
 }
-exports.contactSuccess = (_req, res) => res.render('contact-success');
+
+exports.contactSuccess = (req, res) => res.render('contact-success', req.customer);

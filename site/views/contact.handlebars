@@ -1,17 +1,17 @@
 <h1>Sign up for our newsletter!</h1>
-<form action="/contact/process?form=newsletter" method="post">
+<form action="/contact/process" method="post">
     <input type="hidden" name="_csrf" value="{{csrf}}">
 
     <div class="row">
         <div class="col">
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" name="name" id="firstName" placeholder="First">
+                <input type="text" class="form-control" name="firstName" id="firstName" placeholder="First">
                 <label for="fieldName">First</label>
             </div>
         </div>
         <div class="col">
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" name="name" id="lastName" placeholder="Last">
+                <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Last">
                 <label for="lastName">Last</label>
             </div>
         </div>
