@@ -1,27 +1,28 @@
-// necessary imports
-const express = require('express')
-const mongoose = require('mongoose');
-const handlers = require("./lib/handlers")
-const bodyParser = require('body-parser')
-const expressHandlebars = require('express-handlebars').create({ defaultLayout: 'main' })
-var session = require('express-session')
-
+const config = require('config');
 // configure express app, 
+const express = require('express')
 const app = express()
-app.disable('x-powered-by')
+
+const expressHandlebars = require('express-handlebars').create({ defaultLayout: 'main' })
 app.engine('handlebars', expressHandlebars.engine)
 app.set('view engine', 'handlebars')
-app.set('port', process.env.PORT || 3030)
+
+app.set('port', config.get('port'))
+app.disable('x-powered-by')
 
 // set up middleware
+const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: true }))
+
+const session = require('express-session')
 app.use(session({
     resave: false,
     saveUninitialized: false,
-    secret: 'keyboard kitten'
+    secret: config.get('cookieSecret')
 }))
 
 // set up routes
+const handlers = require("./lib/handlers")
 app.get('/', handlers.home)
 app.get('/about', handlers.about)
 app.get('/contact', handlers.contact)
@@ -37,6 +38,7 @@ app.use(handlers.serverError)
 
 // connect to database
 // mongodb://user:pass@localhost:port/database
+const mongoose = require('mongoose');
 mongoose.connect('mongodb://127.0.0.1/meadowlark')
 
 // start server
