@@ -25,8 +25,6 @@ exports.contact = (req, res) => {
 
 const { Customer } = require('../models/customer.js')
 exports.contactProcess = async (req, res) => {
-    console.log(req.body)
-
     // stuff first last and email into the database
     var result = await Customer.findOne({ email: req.body.email }).exec()
 
