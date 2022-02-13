@@ -21,6 +21,9 @@ app.use(session({
     secret: config.get('cookieSecret')
 }))
 
+const flash = require('connect-flash');
+app.use(flash());
+
 // set up routes
 const handlers = require("./lib/handlers")
 app.get('/', handlers.home)
