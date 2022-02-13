@@ -13,25 +13,28 @@ exports.about = (_req, res) => res.render('about');
 
 
 /*
-    Contact form related
+    Contact display contact form
 */
-exports.contact = (req, res) => {
-    let context = { success: req.query.success }
-    if (req.session.Customer != null) {
-        context.Customer = req.session.Customer
-    }
-    res.render('contact', context);
-}
+exports.contact = (req, res) => res.render('contact', { flash: req.flash('messages') })
 
+
+/*
+ handle contact form submit
+ */
 const { Customer } = require('../models/customer.js')
 exports.contactProcess = async (req, res) => {
-    // stuff first last and email into the database
-    var result = await Customer.findOne({ email: req.body.email }).exec()
+    // Check if they already signed up
+    var customer = await Customer.findOne({ email: req.body.email }).exec()
 
-    if (result === null) {
-        const customer = new Customer({ first: req.body.firstName, last: req.body.lastName, email: req.body.email })
-        result = await customer.save()
+    if (customer === null) {
+        customer = new Customer({ first: req.body.firstName, last: req.body.lastName, email: req.body.email })
+        customer = await customer.save()
     }
-    req.session.Customer = { first: req.body.firstName, last: req.body.lastName, email: req.body.email }
-    res.redirect(303, '/contact?success=true')
+
+    req.flash('messages', {
+        type: 'success',
+        intro: `Thank you ${customer.first}!`,
+        message: 'You have now been signed up for the newsletter.'
+    })
+    res.redirect(303, '/contact')
 }

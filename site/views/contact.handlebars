@@ -1,6 +1,11 @@
-{{#if success}}
-<h1>Thanks! {{Customer.first}} {{Customer.last}} We'll keep in touch!</h1>
-{{else}}
+{{#each flash}}
+<div class="alert alert-{{this.type}} alert-dismissible fade show" role="alert">
+    <strong>{{this.intro}}</strong> {{this.message}}
+
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{{/each}}
+
 <h1>Sign up for our newsletter!</h1>
 <form action="/contact" method="post">
     <input type="hidden" name="_csrf" value="{{csrf}}">
@@ -31,4 +36,3 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </div>
 </form>
-{{/if}}
