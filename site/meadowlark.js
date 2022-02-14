@@ -7,9 +7,6 @@ const expressHandlebars = require('express-handlebars').create({ defaultLayout: 
 app.engine('handlebars', expressHandlebars.engine)
 app.set('view engine', 'handlebars')
 
-app.set('port', config.get('port'))
-app.disable('x-powered-by')
-
 // set up middleware
 const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -18,7 +15,7 @@ const session = require('express-session')
 app.use(session({
     resave: false,
     saveUninitialized: false,
-    secret: config.get('cookieSecret')
+    secret: config.get('session.cookieSecret')
 }))
 
 const flash = require('connect-flash');
@@ -42,12 +39,16 @@ app.use(handlers.serverError)
 // connect to database
 // mongodb://user:pass@localhost:port/database
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://127.0.0.1/meadowlark')
+const dbhost = config.get('mongodb.host')
+const database = config.get('mongodb.database')
+mongoose.connect(`mongodb://${dbhost}/${database}`)
 
 // start server
 if (require.main === module) {
-    app.listen(app.get('port'), () => console.log(
-        `Express started on http://localhost:${app.get('port')} ` +
+    const port = config.get('express.port')
+
+    app.listen(port, () => console.log(
+        `Express started on http://localhost:${port} ` +
         `press Ctrl-C to terminate.`
     ))
 } else {
