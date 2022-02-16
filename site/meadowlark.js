@@ -1,10 +1,18 @@
 const config = require('config');
+
+// set up handlbars
+const { create } = require('express-handlebars')
+const { sectionHelper } = require('./lib/helpers')
+const handlebars = create({
+    helpers: {
+        section: sectionHelper
+    }
+})
+
 // configure express app, 
 const express = require('express')
 const app = express()
-
-const expressHandlebars = require('express-handlebars').create({ defaultLayout: 'main' })
-app.engine('handlebars', expressHandlebars.engine)
+app.engine('handlebars', handlebars.engine)
 app.set('view engine', 'handlebars')
 
 // set up middleware
