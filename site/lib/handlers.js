@@ -13,14 +13,14 @@ exports.about = (_req, res) => res.render('about');
 
 
 /*
-    Contact display contact form
+    Display contact form
 */
-exports.contact = (req, res) => res.render('contact', { flash: req.flash('messages') })
+exports.contact = (req, res) => res.render('contact', { csrf: 'insert csrf here', flash: req.flash('messages') })
 
 
 /*
- handle contact form submit
- */
+    handle contact form post
+*/
 const { Customer } = require('../models/customer.js')
 exports.contactProcess = async (req, res) => {
     // Check if they already signed up
@@ -37,4 +37,25 @@ exports.contactProcess = async (req, res) => {
         message: 'You have now been signed up for the newsletter.'
     })
     res.redirect(303, '/contact')
+}
+
+
+exports.api = {
+    contactProcess: async (req, res) => {
+        // Check if they already signed up
+        var customer = await Customer.findOne({ email: req.body.email }).exec()
+
+        if (customer === null) {
+            customer = new Customer({ first: req.body.firstName, last: req.body.lastName, email: req.body.email })
+            customer = await customer.save()
+        }
+
+        req.flash('messages', {
+            type: 'success',
+            intro: `Thank you ${customer.first}!`,
+            message: 'You have now been signed up for the newsletter.'
+        })
+
+        res.send({ result: 'success', flash: req.flash('messages') })
+    }
 }

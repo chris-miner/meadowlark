@@ -1,5 +1,5 @@
 <h1>Sign up for our newsletter!</h1>
-<form action="/contact" method="post">
+<form id="contactForm" action="/contact" method="post">
     <input type="hidden" name="_csrf" value="{{csrf}}">
 
     <div class="row">
@@ -28,3 +28,4 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </div>
 </form>
+<script src="/js/newsletter.js"></script>
