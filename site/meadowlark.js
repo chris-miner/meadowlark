@@ -10,6 +10,7 @@ app.set('view engine', 'handlebars')
 // set up middleware
 const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
 const session = require('express-session')
 app.use(session({
@@ -27,6 +28,7 @@ app.get('/', handlers.home)
 app.get('/about', handlers.about)
 app.get('/contact', handlers.contact)
 app.post('/contact', handlers.contactProcess)
+app.post('/api/contact-signup', handlers.api.contactProcess)
 app.get('/headers', handlers.headers)
 
 // set up static resource delivery

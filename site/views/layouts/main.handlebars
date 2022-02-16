@@ -18,10 +18,11 @@
 
 <body>
     <div class="container bg-light">
+        <!--  Main Menu -->
         <div class="row border">
             <nav class="navbar navbar-expand-sm bg-light navbar-light">
                 <div class="container">
-                    <!-- Links -->
+                    <!-- Menu Items -->
                     <ul class="navbar-nav">
                         <a class="navbar-brand" href="#">
                             <img src="/img/logo.png" alt="Avatar Logo" style="width:40px;" class="rounded-pill">
@@ -39,15 +40,20 @@
                 </div>
             </nav>
         </div>
+        <!-- Main Content -->
         <div class="row border p-3">
             <div class="col-9">
-                {{#each flash}}
-                <div class="alert alert-{{this.type}} alert-dismissible fade show" role="alert">
-                    <strong>{{this.intro}}</strong> {{this.message}}
 
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <!-- Container for Flash Alerts -->
+                <div id="alertContainer">
+                    {{#each flash}}
+                    <div class="alert alert-{{this.type}} alert-dismissible fade show" role="alert">
+                        <strong>{{this.intro}}</strong>
+                        {{this.message}}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {{/each}}
                 </div>
-                {{/each}}
 
                 {{{body}}}
             </div>
