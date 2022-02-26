@@ -46,6 +46,22 @@ app.use(express.static(__dirname + '/public'))
 app.use(handlers.notFound)
 app.use(handlers.serverError)
 
+/* for development purposes */
+if (process.env.NODE_ENV === "development") {
+    const liveReloadServer = require("livereload")
+        .createServer({ debug: false, extraExts: ["handlebars"] });
+
+    const path = require('path');
+    liveReloadServer.watch(path.join(__dirname, 'public'));
+    liveReloadServer.watch(path.join(__dirname, 'views'));
+
+    liveReloadServer.server.once("connection", () => {
+        setTimeout(() => {
+            liveReloadServer.refresh("/");
+        }, 100);
+    });
+}
+
 // connect to database
 // mongodb://user:pass@localhost:port/database
 const mongoose = require('mongoose');
