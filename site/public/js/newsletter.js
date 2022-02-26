@@ -21,7 +21,6 @@ document.getElementById('contactForm')
                 if (resp.status < 200 || resp.status >= 300)
                     throw new Error(`Request failed with status ${resp.status}`)
                 return resp.json()
-
             }).then(json => {
                 const flash = json.flash[0]
                 const type = flash.type
