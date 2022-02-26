@@ -49,7 +49,7 @@ app.use(handlers.serverError)
 /* for development purposes */
 if (process.env.NODE_ENV === "development") {
     const liveReloadServer = require("livereload")
-        .createServer({ debug: false, extraExts: ["handlebars"] });
+        .createServer({ debug: false, extraExts: ["hbs"] });
 
     const path = require('path');
     liveReloadServer.watch(path.join(__dirname, 'public'));
