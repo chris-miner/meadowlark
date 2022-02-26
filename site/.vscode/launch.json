@@ -1,24 +1,39 @@
 {
+    "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch Chrome",
+            "name": "Watch Express",
+            "type": "pwa-node",
             "request": "launch",
-            "type": "pwa-chrome",
-            "url": "http://localhost:3030",
-            "webRoot": "${workspaceFolder}"
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "program": "${workspaceFolder}/meadowlark.js",
+            "restart": true,
+            "runtimeExecutable": "nodemon",
+            "args": [
+                "--verbose",
+                "--ignore",
+                "public"
+            ],
+            "env": {
+                "NODE_ENV": "development"
+            }
         },
         {
             "name": "Launch Edge",
             "request": "launch",
             "type": "pwa-msedge",
             "url": "http://localhost:3030",
-            "webRoot": "${workspaceFolder}"
-        },
+            "webRoot": "${workspaceFolder}/public"
+        }
+    ],
+    "compounds": [
         {
-            "name": "Launch Microsoft Edge and open the Edge DevTools",
-            "request": "launch",
-            "type": "vscode-edge-devtools.debug",
-            "url": "http://localhost:3030" // Provide your project's url to finish configuring
+            "name": "Debug App",
+            "configurations": [
+                "Watch Express",
+                "Launch Edge"
+            ]
         }
     ]
 }
