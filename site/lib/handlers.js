@@ -56,6 +56,7 @@ exports.api = {
             message: 'You have now been signed up for the newsletter.'
         })
 
+        res.type('application/json')
         res.send({ result: 'success', flash: req.flash('messages') })
     }
 }
