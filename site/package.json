@@ -20,6 +20,7 @@
   "devDependencies": {
     "eslint": "^8.8.0",
     "jest": "^27.5.0",
+    "livereload": "^0.9.3",
     "portfinder": "^1.0.28",
     "puppeteer": "^13.2.0"
   }
